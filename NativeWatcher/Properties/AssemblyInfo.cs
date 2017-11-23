@@ -14,4 +14,4 @@ using Rage.Attributes;
 [assembly: Guid("ded65aba-a275-4970-b74a-33b677db2957")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: Plugin("NativeWatcher", Author = "alexguirre", PrefersSingleInstance = true)]
+[assembly: Plugin("NativeWatcher", Author = "alexguirre", PrefersSingleInstance = true, ShouldTickInPauseMenu = true)]

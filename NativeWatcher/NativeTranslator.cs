@@ -53,7 +53,7 @@
             // build addressToCurrent dictionary
             addressToCurrent = new Dictionary<ulong, ulong>();
             NativeRegistration** nativesTable = NativeRegistration.GetRegistrationTable();
-            for (int i = 0; i < 255; i++)
+            for (int i = 0; i < 256; i++)
             {
                 NativeRegistration* t = nativesTable[i];
                 for (; t != null; t = t->Next)
@@ -78,7 +78,6 @@
             }
             else
             {
-                //throw new InvalidOperationException($"Missing name for original hash {originalHash.ToString("X16")}");
                 return "0x" + originalHash.ToString("X16");
             }
         }
@@ -93,14 +92,12 @@
                 }
                 else
                 {
-                    //throw new InvalidOperationException($"Missing original hash for current hash {current.ToString("X16")}");
                     return current;
                 }
             }
             else
             {
-                //throw new InvalidOperationException($"Missing current hash for address {address.ToString("X16")}");
-                return address;
+                throw new InvalidOperationException($"Missing current hash for address {address.ToString("X16")}");
             }
         }
     }

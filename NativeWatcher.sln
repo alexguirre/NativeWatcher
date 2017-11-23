@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeWatcher", "NativeWatc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeWatcher.Cpp", "NativeWatcher.Cpp\NativeWatcher.Cpp.vcxproj", "{F9604354-E002-4A48-8124-6C6F5526722E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeWatcher.NativesXmlGen", "NativeWatcher.NativesXmlGen\NativeWatcher.NativesXmlGen.csproj", "{73EDBC05-8882-46B8-A490-47372E271F6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{F9604354-E002-4A48-8124-6C6F5526722E}.Debug|x64.Build.0 = Debug|x64
 		{F9604354-E002-4A48-8124-6C6F5526722E}.Release|x64.ActiveCfg = Release|x64
 		{F9604354-E002-4A48-8124-6C6F5526722E}.Release|x64.Build.0 = Release|x64
+		{73EDBC05-8882-46B8-A490-47372E271F6B}.Debug|x64.ActiveCfg = Debug|x64
+		{73EDBC05-8882-46B8-A490-47372E271F6B}.Debug|x64.Build.0 = Debug|x64
+		{73EDBC05-8882-46B8-A490-47372E271F6B}.Release|x64.ActiveCfg = Release|x64
+		{73EDBC05-8882-46B8-A490-47372E271F6B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

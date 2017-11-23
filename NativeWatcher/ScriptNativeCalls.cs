@@ -28,8 +28,8 @@
         public ScriptNative(ulong address)
         {
             Address = address;
-            Hash = 0x0; // TODO
-            Name = "UNKNOWN"; // TODO
+            Hash = NativeTranslator.AddressToOriginal(address);
+            Name = NativeTranslator.OriginalToName(Hash);
         }
     }
 }

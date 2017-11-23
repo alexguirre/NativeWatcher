@@ -93,7 +93,7 @@
                     for (int i = 0; i < scr.Natives.Length; i++)
                     {
                         ScriptNative n = scr.Natives[i];
-                        stringBuffer.AppendFormat("    #{0} {1}  x{2} ({3})\r\n", i, n.Hash.ToString("X16"), n.TimesCalled, n.Address.ToString("X16"));
+                        stringBuffer.AppendFormat("    #{0} {1}  x{2} ({3}) {4}\r\n", i, n.Hash.ToString("X16"), n.TimesCalled, n.Address.ToString("X16"), n.Name);
 
                         if(i > 45)
                         {

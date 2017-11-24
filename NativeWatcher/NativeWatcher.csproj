@@ -48,12 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameFunctions.cs" />
     <Compile Include="NativeRegistration.cs" />
     <Compile Include="NativeTranslator.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptNativeCalls.cs" />
+    <Compile Include="ScriptNativeCallsFetcher.cs" />
     <Compile Include="scrProgram.cs" />
+    <Compile Include="WinFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NativeWatcher.Natives.xml">

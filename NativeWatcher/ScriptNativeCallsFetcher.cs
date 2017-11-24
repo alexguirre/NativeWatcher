@@ -23,12 +23,12 @@
 
         private ulong* stackCount;
         private NativeCallEntry* callsStack;
-        private ulong highestStackCount;
-        private ulong timesFetched;
+        //private ulong highestStackCount;
+        //private ulong timesFetched;
         private ulong callsStackBufferCount;
         private NativeCallEntry[] callsStackBuffer = new NativeCallEntry[StackCapacity];
 
-        public ulong TimesFetched => timesFetched;
+        //public ulong TimesFetched => timesFetched;
         public bool IsActive
         {
             get => IsHooked();
@@ -44,6 +44,7 @@
                 }
             }
         }
+        public bool HasJustFetched { get; private set; }
 
         public IReadOnlyDictionary<uint, ScriptNativeCalls> Scripts => scripts;
 
@@ -67,10 +68,11 @@
 
         public void Tick()
         {
+            HasJustFetched = false;
             ulong c = *stackCount;
-            if (c > highestStackCount) highestStackCount = c;
+            //if (c > highestStackCount) highestStackCount = c;
 
-            Game.DisplaySubtitle("[Hooked:" + IsHooked() + "] " + c + "  " + highestStackCount + "~n~" + ((IntPtr)stackCount).ToString("X16") + "~n~" + ((IntPtr)callsStack).ToString("X16") + "~n~Fetched " + timesFetched + " times.");
+            //Game.DisplaySubtitle("[Hooked:" + IsHooked() + "] " + c + "  " + highestStackCount + "~n~" + ((IntPtr)stackCount).ToString("X16") + "~n~" + ((IntPtr)callsStack).ToString("X16") + "~n~Fetched " + timesFetched + " times.");
 
 
             if (c > (StackCapacity / 4))
@@ -103,7 +105,8 @@
                 scr.Natives[nativeIndex].TimesCalled++;
             }
 
-            timesFetched++;
+            //timesFetched++;
+            HasJustFetched = true;
         }
 
 

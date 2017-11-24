@@ -4,33 +4,43 @@
 
     using Rage;
 
+    using NativeWatcher.Forms;
+
     internal static unsafe class Plugin
     {
         public static ScriptNativeCallsFetcher Fetcher { get; private set; }
+        public static FormsManager Forms { get; private set; }
 
         private static void Main()
         {
             while (Game.IsLoading)
                 GameFiber.Sleep(1000);
 
-            Fetcher = new ScriptNativeCallsFetcher();
-            
+            Fetcher = new ScriptNativeCallsFetcher() { IsActive = true };
+            Forms = new FormsManager();
+
             while (true)
             {
                 GameFiber.Yield();
 
-                if (Game.IsKeyDown(Keys.Y))
+                Fetcher.Tick();
+
+                if (Fetcher.HasJustFetched && Forms.IsMainFormVisible)
                 {
-                    Fetcher.IsActive = !Fetcher.IsActive;
+                    Forms.MainForm.Invoke((System.Action)(() => { Forms.MainForm.UpdateCurrentScriptTab(); }));
                 }
 
-                Fetcher.Tick();
+                if (Game.IsKeyDown(Keys.F11))
+                {
+                    Forms.MainForm.Invoke((System.Action)(() => { Forms.IsMainFormVisible = !Forms.IsMainFormVisible; }));
+                }
             }
         }
 
         private static void OnUnload(bool isTerminating)
         {
-            Fetcher.Dispose();
+            Forms?.Dispose();
+            Fetcher?.Dispose();
         }
     }
 }

@@ -2,7 +2,7 @@
 	native_original_case_address		QWORD 0
 
 	stack_count							QWORD 0
-	native_calls_stack					QWORD 32768*2 dup (?)	; 16 bytes items, first 8 bytes -> programs address, second 8 bytes -> native index
+	native_calls_stack					QWORD 65536*2 dup (?)	; 16 bytes items, first 8 bytes -> programs address, second 8 bytes -> native index
 
 .code
 	get_stack_count_ptr proc

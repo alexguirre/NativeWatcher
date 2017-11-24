@@ -11,10 +11,12 @@
 
     internal static unsafe class Plugin
     {
-        private const uint StackCapacity = 32768;
+        private const uint StackCapacity = 65536;
 
+        [DllImport("NativeWatcher.Cpp.dll", ExactSpelling = true)] [return: MarshalAs(UnmanagedType.I1)] static extern bool IsInitialized();
+        [DllImport("NativeWatcher.Cpp.dll", ExactSpelling = true)] static extern void Initialize(IntPtr switchAddress);
         [DllImport("NativeWatcher.Cpp.dll", ExactSpelling = true)] [return: MarshalAs(UnmanagedType.I1)] static extern bool IsHooked();
-        [DllImport("NativeWatcher.Cpp.dll", ExactSpelling = true)] static extern void Hook(void* nativeCaseAddress);
+        [DllImport("NativeWatcher.Cpp.dll", ExactSpelling = true)] static extern void Hook();
         [DllImport("NativeWatcher.Cpp.dll", ExactSpelling = true)] static extern void Unhook();
         [DllImport("NativeWatcher.Cpp.dll", ExactSpelling = true)] static extern ulong* GetStackCount();
         [DllImport("NativeWatcher.Cpp.dll", ExactSpelling = true)] static extern ulong* GetNativesCallsStack();
@@ -24,8 +26,6 @@
 
         private delegate uint GetHashKeyDelegate(sbyte* text, uint startHash);
         private static GetHashKeyDelegate getHashKey;
-
-        private static IntPtr switchAddress;
 
         static ulong timesFetched;
         static ulong timesCalled;
@@ -39,10 +39,13 @@
             while (Game.IsLoading)
                 GameFiber.Sleep(1000);
 
+            if (!IsInitialized())
+            {
+                Initialize(Game.FindPattern("48 8D 15 ?? ?? ?? ?? 8B 8C 82 ?? ?? ?? ?? 48 03 CA FF E1 48 2B FE"));
+            }
+
             getHashKey = Marshal.GetDelegateForFunctionPointer<GetHashKeyDelegate>(Game.FindAllOccurrencesOfPattern("45 33 D2 44 8B C2 4C 8B C9 48 85 C9")[1]);
-
-            switchAddress = Game.FindPattern("48 8D 15 ?? ?? ?? ?? 8B 8C 82 ?? ?? ?? ?? 48 03 CA FF E1 48 2B FE");
-
+            
             StringBuilder stringBuffer = new StringBuilder();
             string drawString = "";
             Game.RawFrameRender += (s, e) => { e.Graphics.DrawText(drawString, "Consolas", 18.0f, new System.Drawing.PointF(8.0f, 8.0f), System.Drawing.Color.Red); };
@@ -61,7 +64,7 @@
                     }
                     else
                     {
-                        Hook(switchAddress.ToPointer());
+                        Hook();
                     }
                 }
 
@@ -104,7 +107,7 @@
 
                 drawString = stringBuffer.ToString();
 
-                if (*GetStackCount() > (StackCapacity / 2))
+                if (*GetStackCount() > (StackCapacity / 4))
                 {
                     FetchStack();
                 }
@@ -124,8 +127,7 @@
             stackCount = *GetStackCount();
             fixed (NativeCallEntry* calls = callsStackBuffer)
             {
-                memcpy(calls, GetNativesCallsStack(), StackCapacity * 16);
-                memset(GetNativesCallsStack(), 0x00, StackCapacity * 16);
+                memcpy(calls, GetNativesCallsStack(), stackCount * 16);
             }
             *GetStackCount() = 0;
             

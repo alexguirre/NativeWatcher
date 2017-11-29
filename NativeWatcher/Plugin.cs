@@ -27,12 +27,12 @@
 
                 if (Fetcher.HasJustFetched && Forms.IsMainFormVisible)
                 {
-                    Forms.MainForm.Invoke((System.Action)(() => { Forms.MainForm.UpdateCurrentScriptTab(); }));
+                    Forms.MainForm?.Invoke((System.Action)(() => { Forms.MainForm.UpdateCurrentScriptTab(); }));
                 }
 
                 if (Game.IsKeyDown(Keys.F11))
                 {
-                    Forms.MainForm.Invoke((System.Action)(() => { Forms.IsMainFormVisible = !Forms.IsMainFormVisible; }));
+                    Forms.MainForm?.Invoke((System.Action)(() => { Forms.IsMainFormVisible = !Forms.IsMainFormVisible; }));
                 }
             }
         }
